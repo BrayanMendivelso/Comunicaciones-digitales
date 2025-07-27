@@ -1,0 +1,43 @@
+t=Dat.Time_s_;
+x=Dat.AngularVelocity_rad_s_;
+y=Dat.Acceleration_m_s_2_;
+
+subplot(2,1,1)
+plot(t,x)
+grid on
+xlabel('t(s)')
+ylabel('a(m/s^2)')
+title("velocidad angular")
+
+subplot(2,1,2)
+plot(t,y)
+grid on
+xlabel('t(s)')
+ylabel('w(rad/s)')
+title("Aceleración")
+
+                             Thonny
+import pandas as pd
+import matplotlib.pyplot as plt
+ruta_csv = r'D:\Universidad\Semestre 6\Comunicaciones digitales\Medicin 240725 234pm 2025-07-24 20-47-25\Dat.csv'
+a = pd.read_csv(ruta_csv, sep='\t')
+a.columns = a.columns.str.strip().str.replace('"', '')
+print("Columnas detectadas:", a.columns.tolist())
+t = a['Time (s)']
+acel = a['Acceleration (m/s^2)']
+vel=a['Angular velocity (rad/s)']
+plt.figure(figsize=(12, 6))
+plt.subplot(2, 1, 1)
+plt.plot(t, acel, color='purple')
+plt.grid(True)
+plt.xlabel('Tiempo (s)')
+plt.ylabel('a (m/s²)')
+plt.title('Aceleración ')
+plt.subplot(2, 1, 2)
+plt.plot(t, vel, color='blue')
+plt.grid(True)
+plt.xlabel('Tiempo (s)')
+plt.ylabel('w (rad/s)')
+plt.title('Velocidad Angular')
+plt.tight_layout()
+plt.show()
