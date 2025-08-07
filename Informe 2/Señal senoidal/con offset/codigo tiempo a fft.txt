@@ -1,0 +1,49 @@
+data = readmatrix('tiempo señal 2.csv');
+t = data(3:end, 4); 
+x = data(3:end, 5);  
+% 2. Parámetros clave
+Fs = 1 / (4e-7);    
+N = length(x);      
+X = fft(x);
+X_mag = abs(X / N);
+f = Fs * (0:(N/2)) / N;  
+P1 = X_mag(1:N/2+1);
+P1(2:end-1) = 2 * P1(2:end-1);
+P1_dB = 20*log10(max(P1, 1e-12));
+figure;
+plot(f, P1_dB, 'LineWidth', 1.5);
+grid on;
+title('Espectro de Frecuencia (FFT)');
+xlabel('Frecuencia (Hz)');
+ylabel('Amplitud (dB)');
+set(gca, 'FontSize', 12); 
+xlim([0 8000]);  
+ylim([-30 10]);
+
+Thonny
+import numpy as np
+import matplotlib.pyplot as plt
+
+ruta = r'D:\Universidad\Semestre 6\Comunicaciones digitales\Informe 2\Señal senoidal\con offset\tiempo señal 2.csv'
+
+t, x = np.loadtxt(ruta, delimiter=',', skiprows=2, usecols=(3,4), unpack=True)
+
+Fs = 1/4e-7  
+N = len(x)
+
+X = np.fft.fft(x)
+freq = np.fft.fftfreq(N, 1/Fs)[:N//2]
+
+mag = np.abs(X[:N//2]) * 2 / N  
+dB = 20*np.log10(np.maximum(mag, 1e-12))
+
+
+plt.figure(figsize=(10, 6))
+plt.plot(freq, dB, linewidth=1.5)
+plt.grid(True)
+plt.title('Espectro de Frecuencia (FFT)')
+plt.xlabel('Frecuencia (Hz)')
+plt.ylabel('Amplitud (dB)')
+plt.xlim(0, 8000)
+plt.ylim(-20, 10)
+plt.show()

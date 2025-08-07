@@ -1,0 +1,64 @@
+data = readmatrix('FFT1.csv');
+frecuencias = data(3:end, 4);
+dB = data(3:end, 5);
+magnitudes = 10.^(dB/20)*9;
+fases = zeros(size(magnitudes));
+complejos = magnitudes .* exp(1j * fases);
+L = length(complejos);
+espectro_completo = zeros(2*(L-1), 1);
+espectro_completo(1:L) = complejos;
+espectro_completo(end:-1:L+1) = conj(complejos(2:end-1));
+df = frecuencias(2) - frecuencias(1);
+N = length(espectro_completo);
+Fs = df * N;
+senal_reconstruida = ifft(espectro_completo, 'symmetric');
+tiempo = (0:N-1)' / Fs;
+tiempo_inicio = 0.01;      % 10 ms
+tiempo_final = 0.02;       % 20 ms
+figure;
+plot(tiempo, senal_reconstruida, 'LineWidth', 1.5);
+grid on;
+title('Señal Reconstruida (Dominio del Tiempo)');
+xlabel('Tiempo (cs)');
+ylabel('Amplitud');
+set(gca, 'FontSize', 12);
+xlim([tiempo_inicio, tiempo_final]); 
+ylim([min(senal_reconstruida)*1.1, max(senal_reconstruida)*1.1]);
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Ruta del archivo CSV con el espectro (frecuencia en col 4, dB en col 5)
+ruta = r'D:\Universidad\Semestre 6\Comunicaciones digitales\Informe 2\Señal senoidal\FFT1.csv'
+
+# Leer columnas 4 y 5 (índices 3 y 4), omitir primeras 2 filas
+data = np.loadtxt(ruta, delimiter=',', skiprows=2, usecols=(3, 4))
+frecuencias = data[:, 0]
+dB = data[:, 1]
+
+# --- PARTE A: Extraer solo una frecuencia ---
+frecuencia_objetivo = 1000  # Hz (puedes cambiarla a otra)
+indice = np.argmin(np.abs(frecuencias - frecuencia_objetivo))  # índice más cercano
+f_seleccionada = frecuencias[indice]
+
+# Convertir dB a magnitud lineal (con factor 9 si lo necesitas)
+magnitud = 10 ** (dB[indice] / 20) * 9
+fase = 0  # Asumimos fase cero
+
+# --- Reconstrucción de la senoide pura ---
+N = 2048  # Número de muestras (ajustable)
+df = frecuencias[1] - frecuencias[0]
+Fs = df * (2 * (len(frecuencias) - 1))  # Estimación de Fs desde el espectro
+t = np.arange(N) / Fs
+senal = magnitud * np.cos(2 * np.pi * f_seleccionada * t + fase)
+
+# --- Graficar ---
+plt.figure(figsize=(10, 4))
+plt.plot(t, senal, linewidth=1.5)
+plt.grid(True)
+plt.title(f'Senoide pura reconstruida ({f_seleccionada:.1f} Hz)')
+plt.xlabel('Tiempo (s)')
+plt.ylabel('Amplitud')
+plt.xlim(0, 5 / f_seleccionada)  # Mostrar unas pocas ondas
+plt.show()

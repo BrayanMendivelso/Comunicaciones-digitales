@@ -1,0 +1,35 @@
+% Cargar los datos desde el archivo CSV
+data = readmatrix('tiempo señal 1.csv');
+
+% Extraer las dos últimas columnas como tiempo y señal
+t = data(:, end-1);  % Tiempo en segundos
+x = data(:, end);    % Señal en voltios
+
+% Graficar la señal en el dominio del tiempo
+figure;
+plot(t, x);
+title('Señal en el dominio del tiempo');
+xlabel('Tiempo (s)');
+ylabel('Amplitud (V)');
+grid on;
+
+% Calcular parámetros de muestreo
+dt = mean(diff(t));
+fs = 1 / dt;
+N = length(x);
+
+% Calcular la FFT
+X = fft(x);
+f = (0:N-1)*(fs/N);
+X_mag = abs(X)/N;
+X_db = 20 * log10(X_mag + 1e-12);  % evitar log(0)
+
+% Graficar el espectro en dB
+figure;
+plot(f(1:N/2)/1000, X_db(1:N/2));  % convertir a kHz
+title('Espectro de Frecuencia (FFT) en dB');
+xlabel('Frecuencia (kHz)');
+ylabel('Magnitud (dB)');
+grid on
+
+

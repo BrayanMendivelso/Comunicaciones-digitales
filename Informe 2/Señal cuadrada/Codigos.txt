@@ -1,0 +1,51 @@
+T=0.00028;
+f=1/T;
+A1=2.56;
+A3=0.63;
+A5=0.38;
+A7=0.27;
+A9=0.21;
+A11=0.17;
+t=0:T/100:2*T;
+V1= A1*sin(2*pi*f*t);
+V3= A3*sin(2*pi*3*f*t);
+V5= A5*sin(2*pi*5*f*t);
+V7= A7*sin(2*pi*7*f*t);
+V9= A9*sin(2*pi*9*f*t);
+V11= A11*sin(2*pi*11*f*t);
+VT=V1+V3+V5+V7+V9+V11;
+plot(t,VT);
+grid on
+
+>> t1=cuadrada.x_0_0005;
+>> x1=cuadrada.x1_56;
+>> plot(t1,x1)
+
+>> t=FFT4.x0;
+>> x=FFT4.x_28_9897;
+>> plot(t,x)
+
+
+T = 0.1;
+f = 1/T;
+A1 = 0.882;
+A2=0.556;
+A3 = 0.663765992;
+A5 = 0.380640502;
+A7 = 0.288745349;
+A9 = 0.209177514;
+A11 = 0.0173986278;
+t = 0:T/100:2*T;
+V1 = A1 * sin(2 * pi * f * t);
+V3 = A3 * sin(2 * pi * 3 * f * t);
+V5 = A5 * sin(2 * pi * 5 * f * t);
+V7 = A7 * sin(2 * pi * 7 * f * t);
+V9 = A9 * sin(2 * pi * 9 * f * t);
+V11 = A11 * cos(2 * pi * 11 * f * t);
+VT = V1 + V3 + V5 + V7 + V9 + V11;
+figure;
+plot(t, VT);
+title('Señal Cuadrada Reconstruida a partir de Armónicos Teóricos');
+xlabel('Tiempo (s)');
+ylabel('Amplitud');
+grid on;

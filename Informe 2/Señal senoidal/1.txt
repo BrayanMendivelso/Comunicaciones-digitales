@@ -1,0 +1,33 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Cargar datos como antes
+archivo_csv = r'D:\Universidad\Semestre 6\Comunicaciones digitales\Informe 2\Señal senoidal\FFT1.csv'
+data = np.loadtxt(archivo_csv, delimiter=",", skiprows=12, usecols=(3, 4))
+
+frecuencias = data[:, 0]
+dB = data[:, 1]
+
+# Paso 1: encontrar frecuencia dominante
+idx_max = np.argmax(dB)
+f_dominante = frecuencias[idx_max]
+dB_max = dB[idx_max]
+
+# Paso 2: convertir dB a amplitud lineal (suponiendo dB = 20*log10(A))
+amplitud = 10**(dB_max / 20)
+
+# Paso 3: generar señal senoidal en el tiempo
+fs = 44100  # frecuencia de muestreo (puedes ajustarla)
+duracion = 0.01  # duración en segundos (10 ms, por ejemplo)
+t = np.linspace(0, duracion, int(fs*duracion), endpoint=False)
+
+# Señal senoidal pura
+senal = amplitud * np.sin(2 * np.pi * f_dominante * t)
+
+# Graficar
+plt.plot(t * 1000, senal)  # tiempo en milisegundos
+plt.xlabel("Tiempo [ms]")
+plt.ylabel("Amplitud")
+plt.title(f"Señal reconstruida: {f_dominante:.1f} Hz")
+plt.grid(True)
+plt.show()

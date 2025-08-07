@@ -1,0 +1,128 @@
+T = 0.1;
+f = 1/T;
+
+A0 = 0.3;
+A1 = 0.75;
+A2 = 0.61;
+A3 = 0.40;
+A4 = 0.19;
+A5 = 0.0;
+A6 = -0.12;
+A7 = -0.17;
+A8 = -0.15;
+A9 = -0.089;
+A10=0;
+
+t = 0:T/100:2*T;
+
+V0 = A0;
+V1 = A1 * cos(2 * pi * f * t);
+V2 = A2 * cos(2 * pi * 2 * f * t);
+V3 = A3 * cos(2 * pi * 3 * f * t);
+V4 = A4 * cos(2 * pi * 4 * f * t);
+V5 = A5 * cos(2 * pi * 5 * f * t);
+V6 = A6 * cos(2 * pi * 6 * f * t);
+V7 = A7 * cos(2 * pi * 7 * f * t);
+V8 = A8 * cos(2 * pi * 8 * f * t);
+V9 = A9 * cos(2 * pi * 9 * f * t);
+V10 = A10 * cos(2 * pi * 10* f * t);
+V_pulse_20 = V0 + V1 + V2 + V3 + V4 + V5 + V6 + V7 + V8 + V9+V10;
+
+figure;
+plot(t, V_pulse_20);
+title('Señal de Pulso Reconstruida con Duty Cycle 20%');
+xlabel('Tiempo (s)');
+ylabel('Amplitud');
+grid on;
+
+>> t1=pulso2.x_0_0005;
+>> x1=pulso2.x_1_4;
+>> plot(t1,x1)
+
+>> t=FFT5.x0;
+>> x=FFT5.x_1_3691;
+>> plot(t,x)
+
+
+T = 0.1;
+f = 1/T;
+A1 = 1.099043793;
+A2 = 0.91414481;
+A3 = 0.603969486;
+A4 = 0.275749668;
+A5 = 1.414213562;
+A6 = 0.182185999;
+t = 0:T/100:2*T;
+V1 = A1 ;
+V2 = A2 * cos(2 * pi *  f * t);
+V3 = A3 * cos(2 * pi * 2 * f * t);
+V4 = A4 * cos(2 * pi * 3 * f * t);
+V5 = A5 * cos(2 * pi * 4 * f * t);
+V6 = A6 * cos(2 * pi * 5 * f * t);
+V_pulse_20 = V1 + V2 + V3 + V4 + V5 + V6 ;
+figure;
+plot(t, V_pulse_20);
+title('Señal de Pulso Reconstruida con Duty Cycle 30%');
+xlabel('Tiempo (s)');
+ylabel('Amplitud');
+grid on;
+
+
+
+T = 0.1;
+f = 1/T;
+A1 = 1.150840131;
+A2 = 0.91414481;
+A3 = 0.603969486;
+A4 = 0.275749668;
+A5 = 1.414213562;
+A6 = 0.025148669;
+A7 = 0.251486686;
+A8 = 0.219035747;
+A9 = 0.120369096;
+A10 = 1.414213562;
+t = 0:T/100:2*T;
+V1 = A1 ;
+V2 = A2 * sin(2 * pi *  f * t);
+V3 = A3 * sin(2 * pi * 2 * f * t);
+V4 = A4 * sin(2 * pi * 3 * f * t);
+V5 = A5 * sin(2 * pi * 4 * f * t);
+V6 = A6 * sin(2 * pi * 5 * f * t);
+V7 = A7 * sin(2 * pi * 6 * f * t);
+V8 = A8 * sin(2 * pi * 7 * f * t);
+V9 = A9 * sin(2 * pi * 8 * f * t);
+V10 = A10 * sin(2 * pi * 9 * f * t);
+
+V_pulse_20 = V1 + V2 + V3 + V4 + V5 + V6 +V7+V8+V9	;
+figure;
+plot(t, V_pulse_20);
+title('Señal de Pulso Reconstruida con Duty Cycle 30%');
+xlabel('Tiempo (s)');
+ylabel('Amplitud');
+grid on;
+
+
+ T = 0.1;
+f = 1/T;
+A0= 2.41832685;
+A1 = 1.828163348;
+A3 = 0.663765992;
+A5 = 0.380640502;
+A7 = 0.288745349;
+A9 = 0.209177514;
+A11 = 0.0173986278;
+t = 0:T/100:2*T;
+V0 = A0 * ones(size(t));
+V1 = A1 * sin(2 * pi * f * t);
+V3 = A3 * sin(2 * pi * 3 * f * t);
+V5 = A5 * sin(2 * pi * 5 * f * t);
+V7 = A7 * sin(2 * pi * 7 * f * t);
+V9 = A9 * sin(2 * pi * 9 * f * t);
+V11 = A11 * cos(2 * pi * 11 * f * t);
+VT = V0+V1 + V3 + V5 + V7 + V9 + V11;
+figure;
+plot(t, VT);
+title('Señal Cuadrada Reconstruida a partir de Armónicos Teóricos');
+xlabel('Tiempo (s)');
+ylabel('Amplitud');
+grid on;

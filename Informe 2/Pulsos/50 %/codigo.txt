@@ -1,0 +1,105 @@
+ T = 0.1;
+f = 1/T;
+A0= 2.41832685;
+A1 = 1.828163348;
+A3 = 0.663765992;
+A5 = 0.380640502;
+A7 = 0.288745349;
+A9 = 0.209177514;
+A11 = 0.0173986278;
+t = 0:T/100:2*T;
+V0 = A0 * ones(size(t));
+V1 = A1 * sin(2 * pi * f * t);
+V3 = A3 * sin(2 * pi * 3 * f * t);
+V5 = A5 * sin(2 * pi * 5 * f * t);
+V7 = A7 * sin(2 * pi * 7 * f * t);
+V9 = A9 * sin(2 * pi * 9 * f * t);
+V11 = A11 * cos(2 * pi * 11 * f * t);
+VT = V0+V1 + V3 + V5 + V7 + V9 + V11;
+figure;
+plot(t, VT);
+title('Señal Cuadrada Reconstruida a partir de Armónicos Teóricos');
+xlabel('Tiempo (s)');
+ylabel('Amplitud');
+grid on;
+
+>> t=pulso1.x_0_0005;
+>> x=pulso1.x1_56;
+>> plot(t,x)
+
+>> t1=FFT4.x0;
+>> x1=FFT4.x_28_9897;
+>> plot(t1,x1)
+
+
+T = 0.1;
+f = 1/T;
+A1 = 1.909919214;
+A3 = 0.634621816;
+A5 = 0.380640502;
+A7 = 0.275749668;
+A9 = 0.19077216;
+A11 = 0.166155606;
+t = 0:T/100:2*T;
+V1 = A1 * sin(2 * pi * f * t);
+V3 = A3 * sin(2 * pi * 3 * f * t);
+V5 = A5 * sin(2 * pi * 5 * f * t);
+V7 = A7 * sin(2 * pi * 7 * f * t);
+V9 = A9 * sin(2 * pi * 9 * f * t);
+V11 = A11 * cos(2 * pi * 11 * f * t);
+VT = V1 + V3 + V5 + V7 + V9 + V11;
+figure;
+plot(t, VT);
+title('Pulso 50 % Reconstruida a partir de Armónicos Teóricos');
+xlabel('Tiempo (s)');
+ylabel('Amplitud');
+grid on;
+
+
+
+T = 0.1;              % Periodo
+f = 1/T;              % Frecuencia fundamental
+
+% Amplitudes teóricas de los armónicos para ciclo útil del 20%
+A1 = 0.3;
+A2 = 0.75;
+A3 = 0.61;
+A4 = 0.40;
+A5 = 0.19;
+A6 = 0;
+A7 = -0.12;
+A8 = -0.17;
+A9 = -0.15;
+A10 = -0.08;
+A11 = 0;
+
+% Tiempo
+t = 0:T/100:2*T;
+
+% Componentes armónicas (solo senos en este caso, se ajustan según la serie)
+V1 = A1;
+V2 = A2 * sin(2 * pi *  f * t);
+V3 = A3 * sin(2 * pi * 2 * f * t);
+V4 = A4 * sin(2 * pi * 3 * f * t);
+V5 = A5 * sin(2 * pi * 4 * f * t);
+V6 = A6 * sin(2 * pi * 5 * f * t);
+V7 = A7 * sin(2 * pi * 6 * f * t);
+V8 = A8 * sin(2 * pi * 7 * f * t);
+V9 = A9 * sin(2 * pi * 8 * f * t);
+V10 = A10 * sin(2 * pi * 9 * f * t);
+V11 = A11 * sin(2 * pi * 10 * f * t);
+
+% Suma de armónicos
+VT = V1 + V2 + V3 + V4 + V5 + V6 + V7 + V8 + V9 + V10 + V11;
+
+% Gráfica
+figure;
+plot(t, VT, 'LineWidth', 1.5);
+title('Señal de Pulso (20% ciclo útil) reconstruida con 11 armónicos');
+xlabel('Tiempo (s)');
+ylabel('Amplitud');
+grid on;
+
+t1=fft7.x0;
+x1=fft7.x_0_5897;
+plot(t1,x1)

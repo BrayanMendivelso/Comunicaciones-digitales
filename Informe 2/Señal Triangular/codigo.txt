@@ -1,0 +1,54 @@
+T=0.00028;
+f=1/T;
+
+A1=1.21;
+A3=0.13;
+A5=0.04;
+A7=0.02;
+A9=0.0150;
+A11=0.01;
+DC=0;
+t=0:T/100:2*T;
+V1= A1*cos(2*pi*f*t);
+V3= A3*cos(2*pi*3*f*t);
+V5= A5*cos(2*pi*5*f*t);
+V7= A7*cos(2*pi*7*f*t);
+V9= A9*cos(2*pi*9*f*t);
+V11= A11*cos(2*pi*11*f*t);
+VT=V1+V3+V5+V7+V9+V11+DC;
+plot(t,VT);
+
+
+>> t=TRIANGULATIEMPO.x_0_0005;
+>> x=TRIANGULATIEMPO.x1_44;
+>> plot(t,x)
+
+
+>> t=TRIANGULAFFT.x0;
+>> x=TRIANGULAFFT.x_48_9691;
+>> plot(t,x)
+
+T = 0.1;
+f = 1/T;
+A1 = 1.264925646;
+A3 = 0.131982089;
+A5 = 0.045763054;
+A7 = 0.022935858;
+A9 = 0.013198209;
+A11 = 0.01048371;
+t = 0:T/100:2*T;
+V1 = A1 * cos(2 * pi * f * t);
+V3 = A3 * cos(2 * pi * 3 * f * t);
+V5 = A5 * cos(2 * pi * 5 * f * t);
+V7 = A7 * cos(2 * pi * 7 * f * t);
+V9 = A9 * cos(2 * pi * 9 * f * t);
+V11 = A11 * cos(2 * pi * 11 * f * t);
+VT = V1 + V3 + V5 + V7 + V9 + V11;
+figure;
+plot(t, VT);
+title('Señal Triangular Reconstruida a partir de Armónicos Teóricos');
+xlabel('Tiempo (s)');
+ylabel('Amplitud');
+grid on;
+
+
