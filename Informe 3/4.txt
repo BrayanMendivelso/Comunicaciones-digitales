@@ -1,0 +1,66 @@
+# TX.py - Transmisor
+from machine import Pin, UART
+import utime
+
+# Configuración
+uart = UART(0, baudrate=9600, tx=Pin(0), rx=Pin(1))  # UART0: GP0=TX, GP1=RX
+led = Pin(25, Pin.OUT)  # LED interno (Pico)
+char_to_send = 'A'
+
+while True:
+    # Enviar un carácter ASCII cada 2 segundos
+    uart.write(char_to_send)
+    print("Enviado:", char_to_send)
+    
+    # Esperar respuesta
+    if uart.any():
+        response = uart.read().decode('utf-8')
+        if response == 'B':
+            # Encender LED y hacer parpadear 3 segundos
+            for _ in range(6):  # 3 segundos a 0.5s de periodo
+                led.toggle()
+                utime.sleep(0.5)
+            led.off()
+    
+    utime.sleep(2)
+
+# RX.py - Receptor
+from machine import Pin, UART
+import utime
+
+# Configuración
+uart = UART(1, baudrate=9600, tx=Pin(4), rx=Pin(5))  # UART1: GP4=TX, GP5=RX
+led = Pin(25, Pin.OUT)
+counter = 0
+
+# Asegurarse de que el archivo exista
+try:
+    with open("recibidos.txt", "a") as f:
+        pass
+except:
+    pass
+
+while True:
+    if uart.any():  # Si hay datos
+        received = uart.read().decode('utf-8')
+        if received == 'A':
+            counter += 1
+            print("Recibido:", received, "Contador:", counter)
+            
+            # Guardar en archivo
+            try:
+                with open("recibidos.txt", "a") as f:
+                    f.write(str(counter) + "\n")
+            except Exception as e:
+                print("Error al escribir archivo:", e)
+            
+            # Encender LED 5 segundos
+            led.on()
+            utime.sleep(5)
+            led.off()
+            
+            # Responder con 'B'
+            uart.write('B')
+    
+    utime.sleep(0.1)  # Pequeña espera
+
