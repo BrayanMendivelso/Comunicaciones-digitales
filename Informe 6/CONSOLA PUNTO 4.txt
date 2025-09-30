@@ -1,0 +1,192 @@
+
+MPY: soft reboot
+I2C scan: ['0x3c', '0x69']
+Usando OLED en addr: 0x3c
+-> Texto enviado (ver ráfagas 0x40 + datos)
+
+=== MENU OLED I2C (freq=50000 Hz, 128x32) ===
+1. Apagar (0xAE)
+2. Encender (0xAF)
+3. Contraste (0-255)
+4. Invertir 1/0
+5. Limpiar
+6. Texto demo
+7. Animación breve
+8. Enviar COMANDO RAW
+9. Enviar DATO RAW
+F. Cambiar frecuencia I2C
+0. Salir
+> 1
+-> OFF (0xAE)
+
+=== MENU OLED I2C (freq=50000 Hz, 128x32) ===
+1. Apagar (0xAE)
+2. Encender (0xAF)
+3. Contraste (0-255)
+4. Invertir 1/0
+5. Limpiar
+6. Texto demo
+7. Animación breve
+8. Enviar COMANDO RAW
+9. Enviar DATO RAW
+F. Cambiar frecuencia I2C
+0. Salir
+> 2
+-> ON (0xAF)
+
+=== MENU OLED I2C (freq=50000 Hz, 128x32) ===
+1. Apagar (0xAE)
+2. Encender (0xAF)
+3. Contraste (0-255)
+4. Invertir 1/0
+5. Limpiar
+6. Texto demo
+7. Animación breve
+8. Enviar COMANDO RAW
+9. Enviar DATO RAW
+F. Cambiar frecuencia I2C
+0. Salir
+> 3
+Contraste (0-255): 100
+-> CONTRASTE = 100
+
+=== MENU OLED I2C (freq=50000 Hz, 128x32) ===
+1. Apagar (0xAE)
+2. Encender (0xAF)
+3. Contraste (0-255)
+4. Invertir 1/0
+5. Limpiar
+6. Texto demo
+7. Animación breve
+8. Enviar COMANDO RAW
+9. Enviar DATO RAW
+F. Cambiar frecuencia I2C
+0. Salir
+> 4
+Invertir? 1=ON / 0=OFF: 1
+-> INVERT = 1
+
+=== MENU OLED I2C (freq=50000 Hz, 128x32) ===
+1. Apagar (0xAE)
+2. Encender (0xAF)
+3. Contraste (0-255)
+4. Invertir 1/0
+5. Limpiar
+6. Texto demo
+7. Animación breve
+8. Enviar COMANDO RAW
+9. Enviar DATO RAW
+F. Cambiar frecuencia I2C
+0. Salir
+> 4
+Invertir? 1=ON / 0=OFF: 0
+-> INVERT = 0
+
+=== MENU OLED I2C (freq=50000 Hz, 128x32) ===
+1. Apagar (0xAE)
+2. Encender (0xAF)
+3. Contraste (0-255)
+4. Invertir 1/0
+5. Limpiar
+6. Texto demo
+7. Animación breve
+8. Enviar COMANDO RAW
+9. Enviar DATO RAW
+F. Cambiar frecuencia I2C
+0. Salir
+> 5
+-> CLEAR (buffer a 0 y show con chunking)
+
+=== MENU OLED I2C (freq=50000 Hz, 128x32) ===
+1. Apagar (0xAE)
+2. Encender (0xAF)
+3. Contraste (0-255)
+4. Invertir 1/0
+5. Limpiar
+6. Texto demo
+7. Animación breve
+8. Enviar COMANDO RAW
+9. Enviar DATO RAW
+F. Cambiar frecuencia I2C
+0. Salir
+> 6
+-> Texto enviado (ver ráfagas 0x40 + datos)
+
+=== MENU OLED I2C (freq=50000 Hz, 128x32) ===
+1. Apagar (0xAE)
+2. Encender (0xAF)
+3. Contraste (0-255)
+4. Invertir 1/0
+5. Limpiar
+6. Texto demo
+7. Animación breve
+8. Enviar COMANDO RAW
+9. Enviar DATO RAW
+F. Cambiar frecuencia I2C
+0. Salir
+> 7
+Animando 3 s a baja velocidad...
+-> Fin animación
+
+=== MENU OLED I2C (freq=50000 Hz, 128x32) ===
+1. Apagar (0xAE)
+2. Encender (0xAF)
+3. Contraste (0-255)
+4. Invertir 1/0
+5. Limpiar
+6. Texto demo
+7. Animación breve
+8. Enviar COMANDO RAW
+9. Enviar DATO RAW
+F. Cambiar frecuencia I2C
+0. Salir
+> 8
+Comando hex (ej. AE para OFF): AE
+-> CMD RAW 0xAE
+
+=== MENU OLED I2C (freq=50000 Hz, 128x32) ===
+1. Apagar (0xAE)
+2. Encender (0xAF)
+3. Contraste (0-255)
+4. Invertir 1/0
+5. Limpiar
+6. Texto demo
+7. Animación breve
+8. Enviar COMANDO RAW
+9. Enviar DATO RAW
+F. Cambiar frecuencia I2C
+0. Salir
+> 9
+Dato hex (ej. 7E): 7E
+-> DATA RAW 0x7E (columna/píxeles)
+
+=== MENU OLED I2C (freq=50000 Hz, 128x32) ===
+1. Apagar (0xAE)
+2. Encender (0xAF)
+3. Contraste (0-255)
+4. Invertir 1/0
+5. Limpiar
+6. Texto demo
+7. Animación breve
+8. Enviar COMANDO RAW
+9. Enviar DATO RAW
+F. Cambiar frecuencia I2C
+0. Salir
+> F
+Frecuencia I2C (Hz, p.ej. 50000, 100000, 400000): 10000
+-> Frecuencia I2C ajustada a 10000 Hz
+
+=== MENU OLED I2C (freq=10000 Hz, 128x32) ===
+1. Apagar (0xAE)
+2. Encender (0xAF)
+3. Contraste (0-255)
+4. Invertir 1/0
+5. Limpiar
+6. Texto demo
+7. Animación breve
+8. Enviar COMANDO RAW
+9. Enviar DATO RAW
+F. Cambiar frecuencia I2C
+0. Salir
+> 0
+Bye.
