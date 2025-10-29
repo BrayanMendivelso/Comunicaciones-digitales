@@ -1,0 +1,107 @@
+from machine import Pin, SPI, I2C
+from nrf24l01 import NRF24L01
+import utime
+
+# --- Configuración NRF24L01 ---
+spi = SPI(0, sck=Pin(6), mosi=Pin(7), miso=Pin(4))
+csn = Pin(15, Pin.OUT)
+ce = Pin(14, Pin.OUT)
+
+nrf = NRF24L01(spi, csn, ce, channel=76, payload_size=32)
+nrf.open_tx_pipe(b'\xe1\xf0\xf0\xf0\xf0')  # TX hacia el RX
+nrf.open_rx_pipe(1, b'\xd2\xf0\xf0\xf0\xf0')
+
+# --- Configuración I2C y MPU6050 ---
+i2c = I2C(1, scl=Pin(11), sda=Pin(10))
+MPU_ADDR = 0x69  # Dirección I2C del sensor MPU6050
+
+# Despertar el sensor (quita el modo sleep)
+i2c.writeto_mem(MPU_ADDR, 0x6B, b'\x00')
+
+def read_word(reg):
+    """Lee un valor de 16 bits del registro indicado"""
+    high = i2c.readfrom_mem(MPU_ADDR, reg, 1)[0]
+    low = i2c.readfrom_mem(MPU_ADDR, reg + 1, 1)[0]
+    value = (high << 8) | low
+    if value >= 0x8000:
+        value = -((65535 - value) + 1)
+    return value
+
+def read_accel():
+    """Lee los valores del acelerómetro (Ax, Ay, Az)"""
+    ax = read_word(0x3B) / 16384.0
+    ay = read_word(0x3D) / 16384.0
+    az = read_word(0x3F) / 16384.0
+    return ax, ay, az
+
+print("🚀 Transmisor listo. Enviando datos del acelerómetro...")
+
+# --- Bucle principal ---
+while True:
+    try:
+        ax, ay, az = read_accel()
+        mensaje = f"ACC,{ax:.2f},{ay:.2f},{az:.2f}"
+        nrf.send(mensaje.encode())
+        print("📤 Enviado:", mensaje)
+    except OSError:
+        print("⚠️ Error al enviar")
+
+    utime.sleep(0.3)
+
+
+
+
+from machine import Pin, SPI, I2C
+from nrf24l01 import NRF24L01
+from ssd1306 import SSD1306_I2C
+import utime
+
+# --- NRF24L01 ---
+spi = SPI(0, sck=Pin(6), mosi=Pin(7), miso=Pin(4))
+csn = Pin(15, Pin.OUT)
+ce = Pin(14, Pin.OUT)
+
+nrf = NRF24L01(spi, csn, ce, channel=76, payload_size=32)
+nrf.open_tx_pipe(b'\xd2\xf0\xf0\xf0\xf0')  # Dirección inversa de TX
+nrf.open_rx_pipe(1, b'\xe1\xf0\xf0\xf0\xf0')
+nrf.start_listening()
+
+# --- OLED ---
+i2c = I2C(1, scl=Pin(11), sda=Pin(10))
+oled = SSD1306_I2C(128, 64, i2c)
+oled.fill(0)
+oled.text("RX listo...", 10, 0)
+oled.text("Esperando datos...", 0, 20)
+oled.show()
+
+print("🟢 Receptor listo. Esperando datos del TX...")
+
+# --- Bucle principal ---
+while True:
+    if nrf.any():
+        msg = nrf.recv()
+        texto = msg.decode('utf-8', 'ignore').replace('\x00', '').strip()
+        print("📩 Recibido:", texto)
+
+        if texto.startswith("ACC,"):
+            try:
+                _, ax, ay, az = texto.split(",")
+                ax = float(ax)
+                ay = float(ay)
+                az = float(az)
+
+                # Mostrar en OLED
+                oled.fill(0)
+                oled.text("📡 RX - Recibiendo", 0, 0)
+                oled.text(f"Ax: {ax:.2f}", 0, 20)
+                oled.text(f"Ay: {ay:.2f}", 0, 35)
+                oled.text(f"Az: {az:.2f}", 0, 50)
+                oled.show()
+
+            except Exception as e:
+                print("⚠️ Error procesando:", e)
+                oled.fill(0)
+                oled.text("⚠️ Error al leer", 0, 25)
+                oled.show()
+
+    utime.sleep(0.1)

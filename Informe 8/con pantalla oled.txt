@@ -1,0 +1,39 @@
+from machine import Pin, SPI, I2C
+from nrf24l01 import NRF24L01
+from ssd1306 import SSD1306_I2C
+import utime
+
+# --- Configuración NRF24L01 ---
+spi = SPI(0, sck=Pin(6), mosi=Pin(7), miso=Pin(4))
+csn = Pin(15, Pin.OUT)
+ce = Pin(14, Pin.OUT)
+
+nrf = NRF24L01(spi, csn, ce, channel=76, payload_size=32)
+nrf.open_tx_pipe(b'\xd2\xf0\xf0\xf0\xf0')
+nrf.open_rx_pipe(1, b'\xe1\xf0\xf0\xf0\xf0')
+nrf.start_listening()
+
+print("🟢 Receptor listo. Esperando mensajes...\n")
+
+# --- Configuración OLED ---
+i2c = I2C(1, scl=Pin(11), sda=Pin(10))   # Pines I2C
+oled = SSD1306_I2C(128, 64, i2c)
+oled.fill(0)
+oled.text("Esperando datos...", 0, 25)
+oled.show()
+
+# --- Bucle principal ---
+while True:
+    if nrf.any():
+        msg = nrf.recv()
+        texto = msg.decode('utf-8', 'ignore').strip()
+
+        print("📩 Mensaje recibido:", texto)
+
+        # Mostrar mensaje en la OLED
+        oled.fill(0)
+        oled.text("Mensaje recibido:", 0, 10)
+        oled.text(texto, 0, 30)
+        oled.show()
+
+    utime.sleep(0.1)

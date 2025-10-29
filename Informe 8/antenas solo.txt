@@ -1,0 +1,53 @@
+from machine import Pin, SPI
+from nrf24l01 import NRF24L01
+import utime
+
+# --- Configuración SPI y NRF24L01 ---
+spi = SPI(0, sck=Pin(6), mosi=Pin(7), miso=Pin(4))
+csn = Pin(15, Pin.OUT)
+ce = Pin(14, Pin.OUT)
+
+nrf = NRF24L01(spi, csn, ce, channel=76, payload_size=32)
+nrf.open_tx_pipe(b'\xe1\xf0\xf0\xf0\xf0')
+nrf.open_rx_pipe(1, b'\xd2\xf0\xf0\xf0\xf0')
+
+print("🚀 Transmisor listo. Enviando mensajes...")
+
+# --- Bucle principal ---
+while True:
+    try:
+        mensaje = "Hola desde TX"
+        nrf.send(mensaje.encode())
+        print("📤 Enviado:", mensaje)
+    except OSError:
+        print("⚠️ Error al enviar")
+    utime.sleep(1)
+
+
+
+from machine import Pin, SPI
+from nrf24l01 import NRF24L01
+import utime
+
+# --- Configuración SPI y NRF24L01 ---
+spi = SPI(0, sck=Pin(6), mosi=Pin(7), miso=Pin(4))
+csn = Pin(15, Pin.OUT)
+ce = Pin(14, Pin.OUT)
+
+nrf = NRF24L01(spi, csn, ce, channel=76, payload_size=32)
+nrf.open_tx_pipe(b'\xd2\xf0\xf0\xf0\xf0')
+nrf.open_rx_pipe(1, b'\xe1\xf0\xf0\xf0\xf0')
+nrf.start_listening()
+
+print("🟢 Receptor listo. Esperando mensajes...\n")
+
+# --- Bucle principal ---
+while True:
+    if nrf.any():
+        msg = nrf.recv()
+        print("📩 Mensaje recibido:", msg.decode('utf-8', 'ignore'))
+    utime.sleep(0.1)
+
+
+
+
